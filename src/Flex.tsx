@@ -297,12 +297,7 @@ function FlexImpl(
           node.setHeight(scaledHeight)
         } else if (node.getChildCount() === 0) {
           // No size specified, calculate size
-          if (rootGroup.current) {
-            getOBBSize(group, rootGroup.current, boundingBox, vec)
-          } else {
-            // rootGroup ref is missing for some reason, let's just use usual bounding box
-            boundingBox.setFromObject(group).getSize(vec)
-          }
+          getOBBSize(group, boundingBox, vec)
 
           node.setWidth(scaledWidth || vec[mainAxis] * scaleFactor)
           node.setHeight(scaledHeight || vec[crossAxis] * scaleFactor)

@@ -137,23 +137,20 @@ export const rmUndefFromObj = (obj: Record<string, any>) =>
  *
  * NB: This doesn't work when object itself is rotated (well, for now)
  */
-export const getOBBSize = (object: Object3D, root: Object3D, bb: Box3, size: Vector3) => {
+export const getOBBSize = (object: THREE.Object3D, bb: THREE.Box3, size: THREE.Vector3) => {
   object.updateMatrix()
   const oldMatrix = object.matrix
   const oldMatrixAutoUpdate = object.matrixAutoUpdate
 
-  root.updateMatrixWorld()
-  const m = new Matrix4().copy(root.matrixWorld).invert()
+  const m = new Matrix4().copy(object.matrixWorld).invert()
   object.matrix = m
   // to prevent matrix being reassigned
   object.matrixAutoUpdate = false
-  root.updateMatrixWorld()
 
   bb.setFromObject(object).getSize(size)
 
   object.matrix = oldMatrix
   object.matrixAutoUpdate = oldMatrixAutoUpdate
-  root.updateMatrixWorld()
 }
 
 const getIsTopLevelChild = (node: YogaNode) => !node.getParent()?.getParent()
